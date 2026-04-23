@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thuyết trình Thủy Tinh - Ngân Khánh</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #e3f2fd;
+}
+
+.slide {
+    display: none;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.active { display: block; }
+
+img {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 10px;
+    border-radius: 30px;
+    border: none;
+    background: #1e88e5;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎬 Sản xuất thủy tinh 🐧💖</h1>
+
+<div class="slide active">
+    <h2>👋 Chào mọi người</h2>
+    <p id="t0">Xin chào thầy cô và các bạn. Mình là Ngân Khánh. Hôm nay mình sẽ trình bày về sản xuất thủy tinh.</p>
+    <img src="https://images.pexels.com/photos/3785935/pexels-photo-3785935.jpeg">
+</div>
+
+<div class="slide">
+    <h2>🧪 Nguyên liệu</h2>
+    <p id="t1">Thủy tinh được làm từ cát, đá vôi và sô đa.</p>
+    <img src="https://images.pexels.com/photos/1001435/pexels-photo-1001435.jpeg">
+</div>
+
+<div class="slide">
+    <h2>🔥 Nung chảy</h2>
+    <p id="t2">Hỗn hợp được nung ở nhiệt độ cao để tạo thành thủy tinh lỏng.</p>
+    <img src="https://images.pexels.com/photos/2562479/pexels-photo-2562479.jpeg">
+</div>
+
+<div class="slide">
+    <h2>🙏 Kết thúc</h2>
+    <p id="t3">Cảm ơn mọi người đã lắng nghe!</p>
+    <img src="https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg">
+</div>
+
+<button onclick="prev()">⬅️</button>
+<button onclick="next()">➡️</button>
+<button onclick="read()">🔊 Nghe</button>
+
+<script>
+let cur = 0;
+let slides = document.querySelectorAll(".slide");
+
+function showSlide(n) {
+    slides[cur].classList.remove("active");
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add("active");
+}
+
+function next() { showSlide(cur + 1); read(); }
+function prev() { showSlide(cur - 1); read(); }
+
+function read() {
+    let text = document.getElementById("t" + cur).innerText;
+
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.lang = "vi-VN";
+
+    let voices = speechSynthesis.getVoices();
+    let vi = voices.find(v => v.lang === "vi-VN");
+    if (vi) msg.voice = vi;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(msg);
+}
+
+// đọc luôn slide đầu
+window.onload = () => {
+    setTimeout(read, 500);
+};
+</script>
+
+</body>
+</html>
